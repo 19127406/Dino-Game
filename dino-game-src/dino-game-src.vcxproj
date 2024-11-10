@@ -73,6 +73,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)..\includes;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\libs;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)..\builds\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
