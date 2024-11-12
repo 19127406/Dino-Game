@@ -1,98 +1,27 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include <array>
-#include <vector>
-#include <random>
-
-const unsigned int windowSize_x = 960;
-const unsigned int windowSize_y = 540;
-
-class Dino {
-public:
-    sf::Sprite dino;
-    sf::Vector2f dinoPos{ 0.f, 0.f };
-    sf::Vector2f dinoMotion{ 0.f, 0.f };
-    sf::Texture dinoTex;
-    sf::FloatRect dinoBounds;
-    std::array<sf::IntRect, 6> frames;
-    sf::Time timeTracker;
-    int animationCounter{ 0 };
-
-    Dino()
-        :dino(), dinoTex(), timeTracker()
-    {
-        if (dinoTex.loadFromFile("images/PlayerSpriteSheet.png"))
-        {
-            dino.setTexture(dinoTex);
-            for (int i = 0; i < frames.size(); i++)
-                frames[i] = sf::IntRect(i * 90, 0, 90, 95);
-            dino.setTextureRect(frames[0]);
-            dino.setPosition(50.f, windowSize_y - 150.f); // Set initial position of Dino
-        }
-        else
-        {
-            std::cout << "Error loading the PlayerSprite texture" << std::endl;
-        }
-    }
-
-    void update(sf::Time& deltaTime)
-    {
-        dinoPos = dino.getPosition();
-        dinoBounds = dino.getGlobalBounds();
-        dinoBounds.height -= 15.f;
-        dinoBounds.width -= 10.f;
-        timeTracker += deltaTime;
-
-        walk();
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && dinoPos.y >= windowSize_y - 150.f)
-        {
-            animationCounter = 0;
-            dinoMotion.y = -12.5f;
-            dino.setTextureRect(frames[1]);
-        }
-
-        if (dinoPos.y < windowSize_y - 150.f)
-        {
-            dinoMotion.y += 0.25f;
-            dino.setTextureRect(frames[1]);
-        }
-
-        if (dinoPos.y > windowSize_y - 150.f)
-        {
-            dino.setPosition(sf::Vector2f(dino.getPosition().x, windowSize_y - 150.f));
-            dinoMotion.y = 0.f;
-        }
-
-        dino.move(dinoMotion);
-    }
-
-
-    void walk()
-    {
-        for (int i = 0; i < frames.size() - 3; i++)
-            if (animationCounter == (i + 1) * 3)
-                dino.setTextureRect(frames[i]);
-
-        if (animationCounter >= (frames.size() - 2) * 8 )
-            animationCounter = 0;
-
-        animationCounter++;
-    }
-};
+#include "dino.h"
+#include "ground.h"
+#include "obstacles.h"
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(windowSize_x, windowSize_y), "Dino_Game");
+    sf::RenderWindow window;
+
+    window.create(sf::VideoMode(window_width, window_height), "Dino Game", sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
+    // initiate game objects
     Dino dino;
+    Ground ground;
+    Obstacles obstacles;
 
+    // check all the window's events that were triggered since the last iteration of the loop
+    sf::Event event;
     sf::Clock deltaTimeClock;
     sf::Time deltaTime;
 
+    // start render loop
     while (window.isOpen())
     {
-        sf::Event event;
+        // check if user close the game window
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -101,10 +30,19 @@ int main() {
 
         deltaTime = deltaTimeClock.restart();
 
+        // update game objects
         dino.update(deltaTime);
+        ground.update();
+        obstacles.update(deltaTime);
 
         window.clear(sf::Color::White);
+
+        // draw objects on screen
         window.draw(dino.dino);
+        window.draw(ground.groundSprite);
+        obstacles.draw(window);
+
+        // end the current frame
         window.display();
     }
 

@@ -138,7 +138,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dino.cpp" />
+    <ClCompile Include="ground.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="obstacles.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="core.h" />
+    <ClInclude Include="dino.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="ground.h" />
+    <ClInclude Include="obstacles.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
