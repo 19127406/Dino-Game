@@ -4,8 +4,8 @@
 #include <vector>
 #include <random>
 
-const unsigned int windowSize_x = 1000;
-const unsigned int windowSize_y = 500;
+const unsigned int windowSize_x = 960;
+const unsigned int windowSize_y = 540;
 
 class Dino {
 public:
@@ -48,13 +48,13 @@ public:
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && dinoPos.y >= windowSize_y - 150.f)
         {
             animationCounter = 0;
-            dinoMotion.y = -20.f;
+            dinoMotion.y = -12.5f;
             dino.setTextureRect(frames[1]);
         }
 
         if (dinoPos.y < windowSize_y - 150.f)
         {
-            dinoMotion.y += 1.f;
+            dinoMotion.y += 0.25f;
             dino.setTextureRect(frames[1]);
         }
 
@@ -67,13 +67,14 @@ public:
         dino.move(dinoMotion);
     }
 
+
     void walk()
     {
         for (int i = 0; i < frames.size() - 3; i++)
             if (animationCounter == (i + 1) * 3)
                 dino.setTextureRect(frames[i]);
 
-        if (animationCounter >= (frames.size() - 2) * 5 )
+        if (animationCounter >= (frames.size() - 2) * 8 )
             animationCounter = 0;
 
         animationCounter++;
