@@ -1,6 +1,7 @@
 #include "dino.h"
 #include "ground.h"
 #include "obstacles.h"
+#include "clouds.h"
 
 int main() {
     sf::RenderWindow window;
@@ -12,6 +13,7 @@ int main() {
     Dino dino;
     Ground ground;
     Obstacles obstacles;
+    Clouds clouds;
 
     // check all the window's events that were triggered since the last iteration of the loop
     sf::Event event;
@@ -37,11 +39,14 @@ int main() {
             ground.update();
             obstacles.update(deltaTime);
 
-            if (obstacles.checkCollision(dino)) 
+            if (obstacles.checkCollision(dino))
             {
                 dino.setDead(true);
             }
         }
+        // clouds will still moving even when dino is dead
+        // because why would the world stop moving when a little dino gone? (a bit dark here :>)
+        clouds.update(deltaTime);
 
         window.clear(sf::Color::White);
 
@@ -49,6 +54,7 @@ int main() {
         window.draw(dino.dino);
         window.draw(ground.groundSprite);
         obstacles.draw(window);
+        clouds.draw(window);
 
         // end the current frame
         window.display();

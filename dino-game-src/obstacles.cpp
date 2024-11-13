@@ -12,6 +12,9 @@ Obstacles::Obstacles() {
 
 	if (!_cactus_big.loadFromFile("../assets/spritesheets/cactus_big.png"))
 		std::cerr << "Cannot load cactus_big spritesheet" << std::endl;
+
+	if (!_bird.loadFromFile("../assets/spritesheets/bird.png"))
+		std::cerr << "Cannot load bird spritesheet" << std::endl;
 }
 
 void Obstacles::update(sf::Time& deltaTime) {
@@ -20,19 +23,21 @@ void Obstacles::update(sf::Time& deltaTime) {
 	_spawnTimer += deltaTime;
 
 	if (_spawnTimer.asSeconds() > (0.5f + gameSpeed / static_cast<float>(3))) {
-		randomNumber = (rand() % 3) + 1;
-
-		switch (randomNumber)
+		// random on what obstacle to be spawned
+		switch (_distObs(_mt))
 		{
 		case 1:
-			_obstacles.emplace_back(Obstacle(_cactus_single));
+			_obstacles.emplace_back(Cactus(_cactus_single));
 			break;
 		case 2:
-			_obstacles.emplace_back(Obstacle(_cactus_group));
+			_obstacles.emplace_back(Cactus(_cactus_group));
 			break;
 		case 3:
-			_obstacles.emplace_back(Obstacle(_cactus_big));
+			_obstacles.emplace_back(Cactus(_cactus_big));
 			break;
+		/*case 4:
+			_obstacles.emplace_back(Bird(_bird));
+			break;*/
 		default:
 			break;
 		}
@@ -42,10 +47,14 @@ void Obstacles::update(sf::Time& deltaTime) {
 
 	for (int i = 0; i < _obstacles.size(); i++) {
 		_obstacles[i].obstacleSprite.move(-1 * gameSpeed, 0.0f);
+		
 		if (_obstacles[i].obstacleSprite.getPosition().x < -150.0f) {
-			std::vector<Obstacle>::iterator iter = _obstacles.begin() + i;
+			std::vector<Cactus>::iterator iter = _obstacles.begin() + i;
 			_obstacles.erase(iter);
 		}
+
+		/*if (_obstacles[i].getObstacleType() == "bird")
+			_obstacles[i].move();*/
 	}
 }
 

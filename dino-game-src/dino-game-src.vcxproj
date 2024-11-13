@@ -137,12 +137,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="clouds.cpp" />
     <ClCompile Include="dino.cpp" />
     <ClCompile Include="ground.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="obstacles.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="clouds.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="dino.h" />
     <ClInclude Include="game.h" />

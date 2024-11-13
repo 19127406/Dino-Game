@@ -60,7 +60,7 @@ void Dino::update(sf::Time& deltaTime)
 
 void Dino::walk()
 {
-    if (animationCounter % 12 < 6)
+    if (animationCounter % 18 < 9)
     {
         dino.setTextureRect(frames[1]);
     }
@@ -73,7 +73,7 @@ void Dino::walk()
 
 void Dino::low() 
 {
-    if (animationCounter % 12 < 6) 
+    if (animationCounter % 18 < 9) 
     {
         dino.setTextureRect(frames[4]);
     }

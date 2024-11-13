@@ -17,7 +17,7 @@
 mono_crash.*
 
 # Executable
-builds/*.exe
+*.exe
 
 # Build results
 [Dd]ebug/

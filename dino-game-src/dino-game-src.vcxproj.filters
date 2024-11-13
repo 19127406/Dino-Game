@@ -30,6 +30,9 @@
     <ClCompile Include="obstacles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="clouds.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="obstacles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clouds.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
