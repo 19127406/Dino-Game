@@ -31,9 +31,17 @@ int main() {
         deltaTime = deltaTimeClock.restart();
 
         // update game objects
-        dino.update(deltaTime);
-        ground.update();
-        obstacles.update(deltaTime);
+        if (!dino.isDead())
+        {
+            dino.update(deltaTime);
+            ground.update();
+            obstacles.update(deltaTime);
+
+            if (obstacles.checkCollision(dino)) 
+            {
+                dino.setDead(true);
+            }
+        }
 
         window.clear(sf::Color::White);
 

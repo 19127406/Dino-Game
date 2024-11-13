@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core.h"
+#include "dino.h"
 
 #include <vector>
 #include <random>
@@ -30,4 +31,5 @@ public:
 
 	void update(sf::Time& deltaTime);
 	void draw(sf::RenderWindow& window);
+	bool checkCollision(const Dino& dino);
 };

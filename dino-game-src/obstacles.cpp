@@ -53,3 +53,12 @@ void Obstacles::draw(sf::RenderWindow& window) {
 	for (auto& obstacle : _obstacles)
 		window.draw(obstacle.obstacleSprite);
 }
+
+bool Obstacles::checkCollision(const Dino& dino) {
+	for (const auto& obstacle : _obstacles) {
+		if (dino.dino.getGlobalBounds().intersects(obstacle.obstacleSprite.getGlobalBounds())) {
+			return true;
+		}
+	}
+	return false;
+}

@@ -16,13 +16,25 @@ private:
     std::array<sf::IntRect, 6> frames;
     sf::Time timeTracker;
     int animationCounter{ 0 };
+    bool _isDead = false;
+    bool _isLow = false;
 
 public:
     sf::Sprite dino;
+    bool isDead() const { return _isDead; }
+    void setDead(bool dead) 
+    { 
+        _isDead = dead;
+        if (_isDead) 
+        {
+            dino.setTextureRect(frames[3]);
+        }
+    }
     
     // constructor
     Dino();
 
     void update(sf::Time& deltaTime);
     void walk();
+    void low();
 };

@@ -19,24 +19,33 @@ Dino::Dino()
 
 void Dino::update(sf::Time& deltaTime)
 {
+    if (_isDead) return;
+
     dinoPos = dino.getPosition();
     dinoBounds = dino.getGlobalBounds();
     dinoBounds.height -= 15.f;
     dinoBounds.width -= 10.f;
     timeTracker += deltaTime;
 
-    walk();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        _isLow = true;
+        low();  // Call the bowing animation function
+    }
+    else {
+        _isLow = false;
+        walk();  // Call the regular walking animation
+    }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && dinoPos.y >= window_height - 150.f)
     {
         animationCounter = 0;
-        dinoMotion.y = -12.5f;
+        dinoMotion.y = -10.f;
         dino.setTextureRect(frames[1]);
     }
 
     if (dinoPos.y < window_height - 150.f)
     {
-        dinoMotion.y += 0.25f;
+        dinoMotion.y += 0.15f;
         dino.setTextureRect(frames[1]);
     }
 
@@ -51,12 +60,25 @@ void Dino::update(sf::Time& deltaTime)
 
 void Dino::walk()
 {
-    for (int i = 0; i < frames.size() - 3; i++)
-        if (animationCounter == (i + 1) * 3)
-            dino.setTextureRect(frames[i]);
+    if (animationCounter % 12 < 6)
+    {
+        dino.setTextureRect(frames[1]);
+    }
+    else {
+        dino.setTextureRect(frames[2]);
+    }
 
-    if (animationCounter >= (frames.size() - 2) * 8)
-        animationCounter = 0;
+    animationCounter++;
+}
 
+void Dino::low() 
+{
+    if (animationCounter % 12 < 6) 
+    {
+        dino.setTextureRect(frames[4]);
+    }
+    else {
+        dino.setTextureRect(frames[5]);
+    }
     animationCounter++;
 }
