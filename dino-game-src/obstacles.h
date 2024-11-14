@@ -11,9 +11,6 @@
 class Obstacle {
 public:
 	sf::Sprite obstacleSprite;
-
-	virtual std::string getObstacleType() = 0;
-	virtual void move() {}
 };
 
 class Cactus : public Obstacle {
@@ -22,12 +19,6 @@ public:
 		obstacleSprite.setTexture(texture);
 		obstacleSprite.setPosition(sf::Vector2f(window_width, groundOffset));
 	}
-
-	std::string getObstacleType() {
-		return std::string("cactus");
-	}
-
-	void move() override {}
 };
 
 class Bird : public Obstacle {
@@ -37,27 +28,23 @@ private:
 	int _animationCounter = 0;
 
 public:
-	Bird(sf::Texture& texture) {
+	Bird(sf::Texture& texture, sf::Vector2f initPosition) {
 		obstacleSprite.setTexture(texture);
 
 		for (int i = 0; i < _frames.size(); i++)
 			_frames[i] = sf::IntRect(i * 90, 0, 90, 80);
 
 		obstacleSprite.setTextureRect(_frames[0]);
-		obstacleSprite.setPosition(sf::Vector2f(window_width, window_height / 2));
+		obstacleSprite.setPosition(initPosition);
 	}
 
-	std::string getObstacleType() {
-		return std::string("bird");
-	}
-
-	void move() override {
-		if (_animationCounter % 18 < 9)
+	void fly() {
+		if (_animationCounter % 50 < 25)
 			obstacleSprite.setTextureRect(_frames[1]);
 		else
 			obstacleSprite.setTextureRect(_frames[0]);
 		
-		if (_animationCounter < 180)
+		if (_animationCounter < 200)
 			_animationCounter++;
 		else
 			_animationCounter = 0;
@@ -67,6 +54,7 @@ public:
 class Obstacles {
 private:
 	std::vector<Cactus> _obstacles;
+	std::vector<Bird> _birds;
 	sf::Texture _cactus_single;
 	sf::Texture _cactus_group;
 	sf::Texture _cactus_big;
@@ -77,7 +65,7 @@ private:
 	std::random_device _rdev;
 	std::mt19937 _mt{ _rdev() };
 	// randomize bird spawn position
-	std::uniform_int_distribution<std::mt19937::result_type> _distPos{ window_height / 2 - 200, window_height / 2 - 50 };
+	std::uniform_int_distribution<std::mt19937::result_type> _distPos{ window_height / 2, window_height / 2 + 150 };
 	// randomize which obstacle will be spawned
 	std::uniform_int_distribution<std::mt19937::result_type> _distObs{ 1, 4 };
 

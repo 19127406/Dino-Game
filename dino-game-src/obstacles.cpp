@@ -3,6 +3,7 @@
 Obstacles::Obstacles() {
 	_spawnTimer = sf::Time::Zero;
 	_obstacles.reserve(5);
+	_birds.reserve(3);
 
 	if (!_cactus_single.loadFromFile("../assets/spritesheets/cactus_single.png"))
 		std::cerr << "Cannot load cactus_single spritesheet" << std::endl;
@@ -18,11 +19,10 @@ Obstacles::Obstacles() {
 }
 
 void Obstacles::update(sf::Time& deltaTime) {
-	int randomNumber = 0;
 
 	_spawnTimer += deltaTime;
 
-	if (_spawnTimer.asSeconds() > (0.5f + gameSpeed / static_cast<float>(3))) {
+	if (_spawnTimer.asSeconds() > (1.0f + gameSpeed / static_cast<float>(3))) {
 		// random on what obstacle to be spawned
 		switch (_distObs(_mt))
 		{
@@ -35,9 +35,10 @@ void Obstacles::update(sf::Time& deltaTime) {
 		case 3:
 			_obstacles.emplace_back(Cactus(_cactus_big));
 			break;
-		/*case 4:
-			_obstacles.emplace_back(Bird(_bird));
-			break;*/
+		case 4:
+			_birds.emplace_back(Bird(_bird, sf::Vector2f( window_width,
+														static_cast<float>(_distPos(_mt)) )));
+			break;
 		default:
 			break;
 		}
@@ -52,15 +53,25 @@ void Obstacles::update(sf::Time& deltaTime) {
 			std::vector<Cactus>::iterator iter = _obstacles.begin() + i;
 			_obstacles.erase(iter);
 		}
+	}
 
-		/*if (_obstacles[i].getObstacleType() == "bird")
-			_obstacles[i].move();*/
+	for (int i = 0; i < _birds.size(); i++) {
+		_birds[i].fly();
+		_birds[i].obstacleSprite.move(-1 * gameSpeed, 0.0f);
+
+		if (_birds[i].obstacleSprite.getPosition().x < -150.0f) {
+			std::vector<Bird>::iterator iter = _birds.begin() + i;
+			_birds.erase(iter);
+		}
 	}
 }
 
 void Obstacles::draw(sf::RenderWindow& window) {
 	for (auto& obstacle : _obstacles)
 		window.draw(obstacle.obstacleSprite);
+
+	for (auto& bird : _birds)
+		window.draw(bird.obstacleSprite);
 }
 
 bool Obstacles::checkCollision(const Dino& dino) {
@@ -69,5 +80,12 @@ bool Obstacles::checkCollision(const Dino& dino) {
 			return true;
 		}
 	}
+
+	for (const auto& bird : _birds) {
+		if (dino.dino.getGlobalBounds().intersects(bird.obstacleSprite.getGlobalBounds())) {
+			return true;
+		}
+	}
+
 	return false;
 }
