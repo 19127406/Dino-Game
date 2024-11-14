@@ -24,7 +24,7 @@ void Obstacles::update(sf::Time& deltaTime) {
 
 	if (_spawnTimer.asSeconds() > (1.0f + gameSpeed / static_cast<float>(3))) {
 		// random on what obstacle to be spawned
-		switch (_distObs(_mt))
+		switch (_randomObs())
 		{
 		case 1:
 			_obstacles.emplace_back(Cactus(_cactus_single));
@@ -37,7 +37,7 @@ void Obstacles::update(sf::Time& deltaTime) {
 			break;
 		case 4:
 			_birds.emplace_back(Bird(_bird, sf::Vector2f( window_width,
-														static_cast<float>(_distPos(_mt)) )));
+														static_cast<float>(_randomPos()) )));
 			break;
 		default:
 			break;

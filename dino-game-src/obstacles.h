@@ -2,9 +2,10 @@
 
 #include "core.h"
 #include "dino.h"
+#include "random.h"
 
 #include <vector>
-#include <random>
+//#include <random>
 #include <array>
 #include <string>
 
@@ -61,13 +62,10 @@ private:
 	sf::Texture _bird;
 	sf::Time _spawnTimer;
 
-	// random engine
-	std::random_device _rdev;
-	std::mt19937 _mt{ _rdev() };
 	// randomize bird spawn position
-	std::uniform_int_distribution<std::mt19937::result_type> _distPos{ window_height / 2, window_height / 2 + 150 };
+	Random _randomPos{ window_height / 2, window_height / 2 + 150 };
 	// randomize which obstacle will be spawned
-	std::uniform_int_distribution<std::mt19937::result_type> _distObs{ 1, 4 };
+	Random _randomObs{ 1, 4 };
 
 public:
 	// constructor

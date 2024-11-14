@@ -150,6 +150,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="ground.h" />
     <ClInclude Include="obstacles.h" />
+    <ClInclude Include="random.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

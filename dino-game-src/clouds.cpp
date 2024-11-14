@@ -16,7 +16,7 @@ void Clouds::update(sf::Time& deltaTime) {
 	_currentTime += deltaTime;
 	if (_currentTime.asSeconds() > 8.0f) {
 		_clouds.emplace_back(sf::Sprite(_cloudTexture));
-		_clouds.back().setPosition(sf::Vector2f(window_width, _dist(_mt)));
+		_clouds.back().setPosition(sf::Vector2f( window_width, static_cast<float>(_randomPos()) ));
 
 		_currentTime = sf::Time::Zero;
 	}
