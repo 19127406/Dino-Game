@@ -75,17 +75,28 @@ void Obstacles::draw(sf::RenderWindow& window) {
 }
 
 bool Obstacles::checkCollision(const Dino& dino) {
-	for (const auto& obstacle : _obstacles) {
-		if (dino.dino.getGlobalBounds().intersects(obstacle.obstacleSprite.getGlobalBounds())) {
+	sf::FloatRect dinoBounds = dino.getCollisionBounds();
+
+	for (const auto& cactus : _obstacles) {
+		if (cactus.getCollisionBounds().intersects(dinoBounds)) {
+			std::cout << "Collision detected with cactus!" << std::endl;
+			std::cout << "Dino Bounds: " << dinoBounds.left << ", " << dinoBounds.top << ", "
+				<< dinoBounds.width << ", " << dinoBounds.height << std::endl;
+			std::cout << "Cactus Bounds: " << cactus.getCollisionBounds().left << ", "
+				<< cactus.getCollisionBounds().top << ", "
+				<< cactus.getCollisionBounds().width << ", "
+				<< cactus.getCollisionBounds().height << std::endl;
 			return true;
 		}
 	}
 
 	for (const auto& bird : _birds) {
-		if (dino.dino.getGlobalBounds().intersects(bird.obstacleSprite.getGlobalBounds())) {
+		if (bird.getCollisionBounds().intersects(dinoBounds)) {
+			std::cout << "Collision detected with bird!" << std::endl;
 			return true;
 		}
 	}
 
-	return false;
+	return false;  // No collision detected
 }
+

@@ -84,3 +84,12 @@ void Dino::low()
     }
     animationCounter++;
 }
+
+sf::FloatRect Dino::getCollisionBounds() const {
+    sf::FloatRect bounds = dino.getGlobalBounds();
+    bounds.left += 10.f;     // Shrink the left side
+    bounds.width -= 20.f;    // Shrink width from both sides
+    bounds.top += 5.f;       // Shrink the top side
+    bounds.height -= 10.f;   // Shrink height from both top and bottom
+    return bounds;
+}

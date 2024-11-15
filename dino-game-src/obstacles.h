@@ -12,6 +12,13 @@
 class Obstacle {
 public:
 	sf::Sprite obstacleSprite;
+
+	// Virtual function for getting collision bounds
+	virtual sf::FloatRect getCollisionBounds() const {
+		return obstacleSprite.getGlobalBounds();
+	}
+
+	virtual ~Obstacle() = default;  // Virtual destructor for polymorphic class
 };
 
 class Cactus : public Obstacle {
@@ -19,6 +26,13 @@ public:
 	Cactus(sf::Texture& texture) {
 		obstacleSprite.setTexture(texture);
 		obstacleSprite.setPosition(sf::Vector2f(window_width, groundOffset));
+	}
+
+	sf::FloatRect getCollisionBounds() const override {
+		sf::FloatRect bounds = obstacleSprite.getGlobalBounds();
+		bounds.left += 5.f;    // Adjust as needed
+		bounds.width -= 10.f;  // Adjust as needed
+		return bounds;
 	}
 };
 
@@ -50,6 +64,14 @@ public:
 		else
 			_animationCounter = 0;
 	}
+
+	sf::FloatRect getCollisionBounds() const override
+	{
+		sf::FloatRect bounds = obstacleSprite.getGlobalBounds();
+		bounds.top += 5.f;    // Adjust as needed
+		bounds.height -= 10.f; // Adjust as needed
+		return bounds;
+	}
 };
 
 class Obstacles {
@@ -74,4 +96,5 @@ public:
 	void update(sf::Time& deltaTime);
 	void draw(sf::RenderWindow& window);
 	bool checkCollision(const Dino& dino);
+	sf::FloatRect getCollisionBounds() const;
 };
