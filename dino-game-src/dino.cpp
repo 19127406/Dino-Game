@@ -17,7 +17,7 @@ Dino::Dino()
     }
 }
 
-void Dino::update(sf::Time& deltaTime)
+void Dino::update(sf::Time& deltaTime, float gameSpeed)
 {
     if (_isDead) return;
 
@@ -33,7 +33,7 @@ void Dino::update(sf::Time& deltaTime)
     }
     else {
         _isLow = false;
-        walk();  // Call the regular walking animation
+        walk(gameSpeed);  // Call the regular walking animation
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && dinoPos.y >= window_height - 150.f)
@@ -58,10 +58,12 @@ void Dino::update(sf::Time& deltaTime)
     dino.move(dinoMotion);
 }
 
-void Dino::walk()
-{
-    if (animationCounter % 18 < 9)
-    {
+void Dino::walk(float gameSpeed) {
+    // Calculate interval based on gameSpeed; the higher the gameSpeed, the lower the interval
+    int animationInterval = static_cast<int>(18 / gameSpeed);
+
+    // Cycle between frames 1 and 2 based on the calculated interval
+    if (animationCounter % animationInterval < animationInterval / 2) {
         dino.setTextureRect(frames[1]);
     }
     else {

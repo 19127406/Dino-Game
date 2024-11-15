@@ -34,7 +34,7 @@ public:
     // constructor
     Dino();
 
-    void update(sf::Time& deltaTime);
-    void walk();
+    void update(sf::Time& deltaTime, float gameSpeed);
+    void walk(float gameSpeed);
     void low();
 };

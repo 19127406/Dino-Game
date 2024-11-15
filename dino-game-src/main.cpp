@@ -3,7 +3,12 @@
 #include "obstacles.h"
 #include "clouds.h"
 
-int main() {
+int main() 
+{
+
+    float gameSpeed = 1.0f;
+    const float speedIncrement = 0.01f;
+
     sf::RenderWindow window;
 
     window.create(sf::VideoMode(window_width, window_height), "Dino Game", sf::Style::Close);
@@ -32,10 +37,13 @@ int main() {
 
         deltaTime = deltaTimeClock.restart();
 
+        // Update game speed gradually over time
+        gameSpeed += speedIncrement * deltaTime.asSeconds(); // Adjust increment as needed
+
         // update game objects
         if (!dino.isDead())
         {
-            dino.update(deltaTime);
+            dino.update(deltaTime, gameSpeed);
             ground.update();
             obstacles.update(deltaTime);
 
