@@ -13,7 +13,7 @@ Dino::Dino()
     }
     else
     {
-        std::cerr << "Error loading the PlayerSprite texture" << std::endl;
+        std::cerr << "[ERROR] Error loading the PlayerSprite texture" << std::endl;
     }
 }
 

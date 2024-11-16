@@ -9,7 +9,7 @@ Clouds::Clouds() {
 		_clouds.back().setPosition(sf::Vector2f(window_width, window_height / 2 - 40.0f));
 	}
 	else
-		std::cerr << "Cannot load ground spritesheet. Read SFML error for more information" << std::endl;
+		std::cerr << "[ERROR] Cannot load ground spritesheet. Read SFML error for more information" << std::endl;
 }
 
 void Clouds::update(sf::Time& deltaTime) {

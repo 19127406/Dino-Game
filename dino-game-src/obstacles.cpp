@@ -6,16 +6,16 @@ Obstacles::Obstacles() {
 	_birds.reserve(3);
 
 	if (!_cactus_single.loadFromFile("../assets/spritesheets/cactus_single.png"))
-		std::cerr << "Cannot load cactus_single spritesheet" << std::endl;
+		std::cerr << "[ERROR] Cannot load cactus_single spritesheet" << std::endl;
 
 	if (!_cactus_group.loadFromFile("../assets/spritesheets/cactus_group.png"))
-		std::cerr << "Cannot load cactus_group spritesheet" << std::endl;
+		std::cerr << "[ERROR] Cannot load cactus_group spritesheet" << std::endl;
 
 	if (!_cactus_big.loadFromFile("../assets/spritesheets/cactus_big.png"))
-		std::cerr << "Cannot load cactus_big spritesheet" << std::endl;
+		std::cerr << "[ERROR] Cannot load cactus_big spritesheet" << std::endl;
 
 	if (!_bird.loadFromFile("../assets/spritesheets/bird.png"))
-		std::cerr << "Cannot load bird spritesheet" << std::endl;
+		std::cerr << "[ERROR] Cannot load bird spritesheet" << std::endl;
 }
 
 void Obstacles::update(sf::Time& deltaTime) {
@@ -79,10 +79,10 @@ bool Obstacles::checkCollision(const Dino& dino) {
 
 	for (const auto& cactus : _obstacles) {
 		if (cactus.getCollisionBounds().intersects(dinoBounds)) {
-			std::cout << "Collision detected with cactus!" << std::endl;
-			std::cout << "Dino Bounds: " << dinoBounds.left << ", " << dinoBounds.top << ", "
+			std::cout << "[INFO] Collision detected with cactus!" << std::endl;
+			std::cout << "[INFO] Dino Bounds: " << dinoBounds.left << ", " << dinoBounds.top << ", "
 				<< dinoBounds.width << ", " << dinoBounds.height << std::endl;
-			std::cout << "Cactus Bounds: " << cactus.getCollisionBounds().left << ", "
+			std::cout << "[INFO] Cactus Bounds: " << cactus.getCollisionBounds().left << ", "
 				<< cactus.getCollisionBounds().top << ", "
 				<< cactus.getCollisionBounds().width << ", "
 				<< cactus.getCollisionBounds().height << std::endl;
@@ -92,7 +92,7 @@ bool Obstacles::checkCollision(const Dino& dino) {
 
 	for (const auto& bird : _birds) {
 		if (bird.getCollisionBounds().intersects(dinoBounds)) {
-			std::cout << "Collision detected with bird!" << std::endl;
+			std::cout << "[INFO] Collision detected with bird!" << std::endl;
 			return true;
 		}
 	}

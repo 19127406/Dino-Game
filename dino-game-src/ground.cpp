@@ -6,7 +6,7 @@ Ground::Ground() {
         groundSprite.setPosition(sf::Vector2f(0.0f, (window_height + 0.0f) - groundTexture.getSize().y - 50.0f));
     }
     else
-        std::cerr << "Cannot load ground spritesheet. Read SFML error for more information" << std::endl;
+        std::cerr << "[ERROR] Cannot load ground spritesheet. Read SFML error for more information" << std::endl;
 }
 
 void Ground::update() {
