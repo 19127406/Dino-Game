@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core.h"
+#include "sounds.h"
 
 #include <array>
 #include <vector>
@@ -15,9 +16,12 @@ private:
     sf::FloatRect dinoBounds;
     std::array<sf::IntRect, 6> frames;
     sf::Time timeTracker;
+
     int animationCounter{ 0 };
     bool _isDead = false;
     bool _isLow = false;
+
+    Sounds _sounds;
 
 public:
     sf::Sprite dino;
@@ -27,6 +31,7 @@ public:
         _isDead = dead;
         if (_isDead)
         {
+            _sounds.dieSound.play();
             dino.setTextureRect(frames[3]);
         }
     }

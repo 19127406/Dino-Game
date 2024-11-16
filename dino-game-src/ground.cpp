@@ -7,6 +7,15 @@ Ground::Ground() {
     }
     else
         std::cerr << "[ERROR] Cannot load ground spritesheet. Read SFML error for more information" << std::endl;
+
+    if (!_bg_music.openFromFile("../assets/sounds/yoasobi_yoru_kakeru.wav"))
+        std::cerr << "[ERROR] Cannot load background music. Read SFML error for more information" << std::endl;
+    _bg_music.setVolume(50.0f);
+    startMusic();
+}
+
+Ground::~Ground() {
+    stopMusic();
 }
 
 void Ground::update() {
@@ -16,4 +25,12 @@ void Ground::update() {
     offset += gameSpeed;
 
     groundSprite.setTextureRect(sf::IntRect(offset, 0, window_width, window_height));
+}
+
+void Ground::startMusic() {
+    _bg_music.play();
+}
+
+void Ground::stopMusic() {
+    _bg_music.stop();
 }

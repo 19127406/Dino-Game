@@ -115,7 +115,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
     </Link>
@@ -151,6 +151,7 @@
     <ClInclude Include="ground.h" />
     <ClInclude Include="obstacles.h" />
     <ClInclude Include="random.h" />
+    <ClInclude Include="sounds.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

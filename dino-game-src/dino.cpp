@@ -41,6 +41,9 @@ void Dino::update(sf::Time& deltaTime, float gameSpeed)
         animationCounter = 0;
         dinoMotion.y = -10.f;
         dino.setTextureRect(frames[1]);
+
+        // play jump sound
+        _sounds.jumpSound.play();
     }
 
     if (dinoPos.y < window_height - 150.f)

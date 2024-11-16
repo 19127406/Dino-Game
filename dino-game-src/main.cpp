@@ -49,6 +49,7 @@ int main()
 
             if (obstacles.checkCollision(dino))
             {
+                ground.stopMusic();
                 dino.setDead(true);
             }
         }

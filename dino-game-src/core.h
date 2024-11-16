@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 
 constexpr int window_width = 960;
