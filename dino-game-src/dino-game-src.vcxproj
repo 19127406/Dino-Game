@@ -139,11 +139,13 @@
   <ItemGroup>
     <ClCompile Include="clouds.cpp" />
     <ClCompile Include="dino.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="ground.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="obstacles.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="buttons.h" />
     <ClInclude Include="clouds.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="dino.h" />
@@ -152,6 +154,7 @@
     <ClInclude Include="obstacles.h" />
     <ClInclude Include="random.h" />
     <ClInclude Include="sounds.h" />
+    <ClInclude Include="texts.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

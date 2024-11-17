@@ -5,9 +5,9 @@
 
 class Ground {
 private:
-    sf::Texture groundTexture;
+    sf::Texture _groundTexture;
     sf::Music _bg_music;
-    int offset = 0;
+    int _offset = 0;
 
 public:
     sf::Sprite groundSprite;
@@ -21,4 +21,5 @@ public:
     void update();
     void startMusic();
     void stopMusic();
+    void reset();
 };

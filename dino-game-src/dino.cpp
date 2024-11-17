@@ -96,3 +96,9 @@ sf::FloatRect Dino::getCollisionBounds() const {
     bounds.height -= 10.f;   // Shrink height from both top and bottom
     return bounds;
 }
+
+void Dino::reset() {
+    animationCounter = 0;
+    dino.setTextureRect(frames[0]);
+    dino.setPosition(50.f, groundOffset);
+}

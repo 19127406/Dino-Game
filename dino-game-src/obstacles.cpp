@@ -100,3 +100,8 @@ bool Obstacles::checkCollision(const Dino& dino) {
 	return false;  // No collision detected
 }
 
+void Obstacles::reset() {
+	_spawnTimer = sf::Time::Zero;
+	_obstacles.clear();
+	_birds.clear();
+}

@@ -43,4 +43,5 @@ public:
     void walk(float gameSpeed);
     void low();
     sf::FloatRect getCollisionBounds() const;
+    void reset();
 };

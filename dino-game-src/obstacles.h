@@ -97,4 +97,5 @@ public:
 	void draw(sf::RenderWindow& window);
 	bool checkCollision(const Dino& dino);
 	//sf::FloatRect getCollisionBounds() const;
+	void reset();
 };

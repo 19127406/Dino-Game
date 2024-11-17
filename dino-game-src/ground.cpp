@@ -1,9 +1,9 @@
 #include "ground.h"
 
 Ground::Ground() {
-    if (groundTexture.loadFromFile("../assets/spritesheets/ground.png")) {
-        groundSprite.setTexture(groundTexture);
-        groundSprite.setPosition(sf::Vector2f(0.0f, (window_height + 0.0f) - groundTexture.getSize().y - 50.0f));
+    if (_groundTexture.loadFromFile("../assets/spritesheets/ground.png")) {
+        groundSprite.setTexture(_groundTexture);
+        groundSprite.setPosition(sf::Vector2f(0.0f, (window_height + 0.0f) - _groundTexture.getSize().y - 50.0f));
     }
     else
         std::cerr << "[ERROR] Cannot load ground spritesheet. Read SFML error for more information" << std::endl;
@@ -19,12 +19,12 @@ Ground::~Ground() {
 }
 
 void Ground::update() {
-    if (offset > groundTexture.getSize().x - window_width)
-        offset = 0;
+    if (_offset > _groundTexture.getSize().x - window_width)
+        _offset = 0;
     
-    offset += gameSpeed;
+    _offset += gameSpeed;
 
-    groundSprite.setTextureRect(sf::IntRect(offset, 0, window_width, window_height));
+    groundSprite.setTextureRect(sf::IntRect(_offset, 0, window_width, window_height));
 }
 
 void Ground::startMusic() {
@@ -33,4 +33,10 @@ void Ground::startMusic() {
 
 void Ground::stopMusic() {
     _bg_music.stop();
+}
+
+void Ground::reset() {
+    _offset = 0;
+    groundSprite.setTextureRect(sf::IntRect(0, 0, window_width, window_height));
+    startMusic();
 }
