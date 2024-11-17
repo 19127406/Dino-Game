@@ -4,41 +4,42 @@
 
 class ScoreManager {
 private:
-    int score;
-    sf::Text scoreText;
-    sf::Font font;
+    int _score;
+    int _highScore;
+    sf::Text _scoreText;
+    sf::Font _font;
 
 public:
-    ScoreManager() : score(0) {
+    ScoreManager() : _score(0) {
         // Load font
-        if (!font.loadFromFile("../assets/fonts/press_start_2p.ttf")) {  // Replace with your font path
+        if (!_font.loadFromFile("../assets/fonts/press_start_2p.ttf")) {  // Replace with your font path
             std::cerr << "Error loading font" << std::endl;
         }
 
         // Configure score text
-        scoreText.setFont(font);
-        scoreText.setCharacterSize(24);
-        scoreText.setFillColor(sf::Color::Black);
-        scoreText.setPosition(10.f, 10.f);  // Top-left corner
+        _scoreText.setFont(_font);
+        _scoreText.setCharacterSize(24);
+        _scoreText.setFillColor(sf::Color::Black);
+        _scoreText.setPosition(10.f, 10.f);  // Top-left corner
         updateScoreText();
     }
 
     void addScore(int points) {
-        score += points;
+        _score += points;
         updateScoreText();
     }
 
     void reset() {
-        score = 0;
+        _score = 0;
         updateScoreText();
     }
 
     void draw(sf::RenderWindow& window) {
-        window.draw(scoreText);
+        window.draw(_scoreText);
     }
 
 private:
     void updateScoreText() {
-        scoreText.setString("Score: " + std::to_string(score));
+        _scoreText.setString("Score: " + std::to_string(_score));
     }
 };

@@ -10,12 +10,12 @@
 
 class Dino {
 private:
-    sf::Vector2f dinoPos{ 0.f, 0.f };
-    sf::Vector2f dinoMotion{ 0.f, 0.f };
-    sf::Texture dinoTex;
-    sf::FloatRect dinoBounds;
-    std::array<sf::IntRect, 6> frames;
-    sf::Time timeTracker;
+    sf::Vector2f _dinoPos{ 0.f, 0.f };
+    sf::Vector2f _dinoMotion{ 0.f, 0.f };
+    sf::Texture _dinoTex;
+    sf::FloatRect _dinoBounds;
+    std::array<sf::IntRect, 6> _frames;
+    sf::Time _timeTracker;
 
     int animationCounter{ 0 };
     bool _isDead = false;
@@ -32,7 +32,7 @@ public:
         if (_isDead)
         {
             _sounds.dieSound.play();
-            dino.setTextureRect(frames[3]);
+            dino.setTextureRect(_frames[3]);
         }
     }
 
