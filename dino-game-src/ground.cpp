@@ -11,6 +11,7 @@ Ground::Ground() {
     if (!_bg_music.openFromFile("../assets/sounds/yoasobi_yoru_kakeru.wav"))
         std::cerr << "[ERROR] Cannot load background music. Read SFML error for more information" << std::endl;
     _bg_music.setVolume(50.0f);
+    _bg_music.setLoop(true);
     startMusic();
 }
 
