@@ -62,9 +62,6 @@ void Game::update(sf::Time& deltaTime) {
     _clouds.update(deltaTime);  // Clouds keep moving
 }
 
-
-
-
 void Game::draw(sf::RenderWindow& window) {
     if (_inGame) {
         // Draw game objects
@@ -86,5 +83,3 @@ void Game::draw(sf::RenderWindow& window) {
         _instructionText.draw(window);
     }
 }
-
-
