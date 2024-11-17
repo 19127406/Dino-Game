@@ -8,6 +8,7 @@ private:
     sf::Texture _groundTexture;
     sf::Music _bg_music;
     int _offset = 0;
+    int _base_speed = 3;
 
 public:
     sf::Sprite groundSprite;
@@ -18,7 +19,7 @@ public:
     // destructor
     ~Ground();
 
-    void update();
+    void update(float gameSpeed);
     void startMusic();
     void stopMusic();
     void reset();

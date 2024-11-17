@@ -7,4 +7,4 @@
 constexpr int window_width = 960;
 constexpr int window_height = 540;
 constexpr int groundOffset = window_height - 150;
-constexpr int gameSpeed = 3;
+//constexpr int gameSpeed = 3;

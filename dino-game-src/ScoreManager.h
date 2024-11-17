@@ -21,14 +21,14 @@ public:
 
         // Configure score text
         _scoreText.setFont(_font);
-        _scoreText.setCharacterSize(24);
+        _scoreText.setCharacterSize(16);
         _scoreText.setFillColor(sf::Color::Black);
         _scoreText.setPosition(10.f, 10.f);  // Top-left corner
         updateScoreText();
 
         // Configure high score text
         _highScoreText.setFont(_font);
-        _highScoreText.setCharacterSize(24);
+        _highScoreText.setCharacterSize(16);
         _highScoreText.setFillColor(sf::Color::Black);
         _highScoreText.setPosition(10.f, 40.f);  // Below current score
         updateHighScoreText();

@@ -24,7 +24,7 @@ private:
     float _gameSpeedDino = 1.0f;
     float _gameSpeedObs = 1.0f;
     const float _speedIncrementDino = 0.01f;
-    const float _speedIncrementObs = 0.0005f;//<--Adjust this to increase obstacle speed increasement
+    const float _speedIncrementObs = 0.05f;//<--Adjust this to increase obstacle speed increasement
 
     bool _inGame = false;
 

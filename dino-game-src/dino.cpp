@@ -40,7 +40,7 @@ void Dino::update(sf::Time& deltaTime, float gameSpeed)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _dinoPos.y >= window_height - 150.f)
     {
         animationCounter = 0;
-        _dinoMotion.y = -10.f;
+        _dinoMotion.y = -8.2f;
         dino.setTextureRect(_frames[1]);
 
         // play jump sound

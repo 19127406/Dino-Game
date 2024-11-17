@@ -24,9 +24,10 @@ void Game::update(sf::Time& deltaTime) {
         if (!_dino.isDead()) {
             // Update game speed gradually over time
             _gameSpeedDino += _speedIncrementDino * deltaTime.asSeconds();
+            _gameSpeedObs += _speedIncrementObs * deltaTime.asSeconds();
 
             _dino.update(deltaTime, _gameSpeedDino);
-            _ground.update();
+            _ground.update(_gameSpeedObs);
 
             // Update obstacles and score for avoided ones
             int avoidedObstacles = _obstacles.update(deltaTime, _gameSpeedObs);

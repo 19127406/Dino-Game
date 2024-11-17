@@ -18,11 +18,11 @@ Ground::~Ground() {
     stopMusic();
 }
 
-void Ground::update() {
+void Ground::update(float gameSpeed) {
     if (_offset > _groundTexture.getSize().x - window_width)
         _offset = 0;
     
-    _offset += gameSpeed;
+    _offset += _base_speed * gameSpeed;
 
     groundSprite.setTextureRect(sf::IntRect(_offset, 0, window_width, window_height));
 }
