@@ -21,24 +21,28 @@ Game::~Game() {}
 
 void Game::update(sf::Time& deltaTime) {
     if (_inGame) {
-        // update game objects
-        if (!_dino.isDead())
-        {
-            // Update game speed gradually over time
-            _gameSpeed += _speedIncrement * deltaTime.asSeconds();
+        if (!_dino.isDead()) {
+            // Update game objects and speed
+            _gameSpeedDino += _speedIncrementDino * deltaTime.asSeconds();
 
-            _dino.update(deltaTime, _gameSpeed);
+            _dino.update(deltaTime, _gameSpeedDino);
             _ground.update();
-            _obstacles.update(deltaTime);
+            _obstacles.update(deltaTime, _gameSpeedObs);
 
-            // check if dino collide with obstacle
-            if (_obstacles.checkCollision(_dino))
-            {
+            // Increment the score periodically
+            if (_scoreClock.getElapsedTime().asSeconds() > 0.5f) {  // Increase score every 0.5 seconds
+                _scoreManager.addScore(10);  // Add 10 points
+                _scoreClock.restart();
+            }
+
+            // Check for collision
+            if (_obstacles.checkCollision(_dino)) {
                 _ground.stopMusic();
                 _dino.setDead(true);
             }
         }
         else {
+            // Display "Game Over" and reset game
             _overlayText.setText("GAME OVER");
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
                 _dino.setDead(false);
@@ -46,6 +50,7 @@ void Game::update(sf::Time& deltaTime) {
                 _dino.reset();
                 _ground.reset();
                 _obstacles.reset();
+                _scoreManager.reset();  // Reset the score
             }
         }
     }
@@ -54,17 +59,21 @@ void Game::update(sf::Time& deltaTime) {
             _inGame = true;
     }
 
-    // clouds will still moving even when dino is dead
-    // because why would the world stop moving when a little dino gone? (a bit dark here :>)
+    // Clouds continue moving
     _clouds.update(deltaTime);
 }
 
+
 void Game::draw(sf::RenderWindow& window) {
     if (_inGame) {
+        // Draw game objects
         window.draw(_dino.dino);
         window.draw(_ground.groundSprite);
         _obstacles.draw(window);
         _clouds.draw(window);
+
+        // Draw the score
+        _scoreManager.draw(window);
 
         if (_dino.isDead()) {
             _overlayText.draw(window);

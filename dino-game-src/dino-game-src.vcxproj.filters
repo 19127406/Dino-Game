@@ -68,5 +68,8 @@
     <ClInclude Include="texts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

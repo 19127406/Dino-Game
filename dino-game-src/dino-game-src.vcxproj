@@ -153,6 +153,7 @@
     <ClInclude Include="ground.h" />
     <ClInclude Include="obstacles.h" />
     <ClInclude Include="random.h" />
+    <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="sounds.h" />
     <ClInclude Include="texts.h" />
   </ItemGroup>

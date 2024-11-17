@@ -18,14 +18,12 @@ Obstacles::Obstacles() {
 		std::cerr << "[ERROR] Cannot load bird spritesheet" << std::endl;
 }
 
-void Obstacles::update(sf::Time& deltaTime) {
-
+void Obstacles::update(sf::Time& deltaTime, float gameSpeed) {
 	_spawnTimer += deltaTime;
 
-	if (_spawnTimer.asSeconds() > (1.0f + gameSpeed / static_cast<float>(3))) {
-		// random on what obstacle to be spawned
-		switch (_randomObs())
-		{
+	// Dynamic spawn rate based on game speed
+	if (_spawnTimer.asSeconds() > (2.0f - gameSpeed * 0.1f)) {
+		switch (_randomObs()) {
 		case 1:
 			_obstacles.emplace_back(Cactus(_cactus_single));
 			break;
@@ -36,8 +34,7 @@ void Obstacles::update(sf::Time& deltaTime) {
 			_obstacles.emplace_back(Cactus(_cactus_big));
 			break;
 		case 4:
-			_birds.emplace_back(Bird(_bird, sf::Vector2f( window_width,
-														static_cast<float>(_randomPos()) )));
+			_birds.emplace_back(Bird(_bird, sf::Vector2f(window_width, static_cast<float>(_randomPos()))));
 			break;
 		default:
 			break;
@@ -46,31 +43,30 @@ void Obstacles::update(sf::Time& deltaTime) {
 		_spawnTimer = sf::Time::Zero;
 	}
 
+	// Update positions
 	for (int i = 0; i < _obstacles.size(); i++) {
-		_obstacles[i].obstacleSprite.move(-1 * gameSpeed, 0.0f);
-		
+		_obstacles[i].obstacleSprite.move(-3.0f * gameSpeed, 0.0f);
+
 		if (_obstacles[i].obstacleSprite.getPosition().x < -150.0f) {
-			std::vector<Cactus>::iterator iter = _obstacles.begin() + i;
-			_obstacles.erase(iter);
+			_obstacles.erase(_obstacles.begin() + i);
 		}
 	}
 
 	for (int i = 0; i < _birds.size(); i++) {
 		_birds[i].fly();
-		_birds[i].obstacleSprite.move(-1 * gameSpeed, 0.0f);
+		_birds[i].obstacleSprite.move(-3.0f * gameSpeed, 0.0f);
 
 		if (_birds[i].obstacleSprite.getPosition().x < -150.0f) {
-			std::vector<Bird>::iterator iter = _birds.begin() + i;
-			_birds.erase(iter);
+			_birds.erase(_birds.begin() + i);
 		}
 	}
 }
 
 void Obstacles::draw(sf::RenderWindow& window) {
-	for (auto& obstacle : _obstacles)
+	for (const auto& obstacle : _obstacles)
 		window.draw(obstacle.obstacleSprite);
 
-	for (auto& bird : _birds)
+	for (const auto& bird : _birds)
 		window.draw(bird.obstacleSprite);
 }
 
@@ -80,12 +76,6 @@ bool Obstacles::checkCollision(const Dino& dino) {
 	for (const auto& cactus : _obstacles) {
 		if (cactus.getCollisionBounds().intersects(dinoBounds)) {
 			std::cout << "[INFO] Collision detected with cactus!" << std::endl;
-			std::cout << "[INFO] Dino Bounds: " << dinoBounds.left << ", " << dinoBounds.top << ", "
-				<< dinoBounds.width << ", " << dinoBounds.height << std::endl;
-			std::cout << "[INFO] Cactus Bounds: " << cactus.getCollisionBounds().left << ", "
-				<< cactus.getCollisionBounds().top << ", "
-				<< cactus.getCollisionBounds().width << ", "
-				<< cactus.getCollisionBounds().height << std::endl;
 			return true;
 		}
 	}
@@ -97,7 +87,7 @@ bool Obstacles::checkCollision(const Dino& dino) {
 		}
 	}
 
-	return false;  // No collision detected
+	return false;
 }
 
 void Obstacles::reset() {

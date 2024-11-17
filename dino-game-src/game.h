@@ -6,6 +6,7 @@
 #include "clouds.h"
 #include "buttons.h"
 #include "texts.h"
+#include "ScoreManager.h"
 
 class Game {
 private:
@@ -17,9 +18,13 @@ private:
 
     Text _overlayText;
     Text _instructionText;
+    ScoreManager _scoreManager;
+    sf::Clock _scoreClock;  // To track score update intervals
 
-    float _gameSpeed = 1.0f;
-    const float _speedIncrement = 0.01f;
+    float _gameSpeedDino = 1.0f;
+    float _gameSpeedObs = 1.0f;
+    const float _speedIncrementDino = 0.01f;
+    const float _speedIncrementObs = 0.0005f;//<--Adjust this to increase obstacle speed increasement
 
     bool _inGame = false;
 

@@ -1,4 +1,5 @@
 #include "dino.h"
+#include "sounds.h"
 
 
 Dino::Dino()
