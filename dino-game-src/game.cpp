@@ -22,27 +22,25 @@ Game::~Game() {}
 void Game::update(sf::Time& deltaTime) {
     if (_inGame) {
         if (!_dino.isDead()) {
-            // Update game objects and speed
+            // Update game speed gradually over time
             _gameSpeedDino += _speedIncrementDino * deltaTime.asSeconds();
 
             _dino.update(deltaTime, _gameSpeedDino);
             _ground.update();
-            _obstacles.update(deltaTime, _gameSpeedObs);
 
-            // Increment the score periodically
-            if (_scoreClock.getElapsedTime().asSeconds() > 0.5f) {  // Increase score every 0.5 seconds
-                _scoreManager.addScore(10);  // Add 10 points
-                _scoreClock.restart();
-            }
+            // Update obstacles and score for avoided ones
+            int avoidedObstacles = _obstacles.update(deltaTime, _gameSpeedObs);
+            _scoreManager.addScore(avoidedObstacles * 100);
 
-            // Check for collision
+            // Check if Dino collides with an obstacle
             if (_obstacles.checkCollision(_dino)) {
                 _ground.stopMusic();
                 _dino.setDead(true);
+                _scoreManager.updateHighScore();  // Update high score on collision
             }
         }
         else {
-            // Display "Game Over" and reset game
+            // Handle game over state
             _overlayText.setText("GAME OVER");
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
                 _dino.setDead(false);
@@ -50,18 +48,20 @@ void Game::update(sf::Time& deltaTime) {
                 _dino.reset();
                 _ground.reset();
                 _obstacles.reset();
-                _scoreManager.reset();  // Reset the score
+                _scoreManager.reset();  // Reset current score
             }
         }
     }
     else {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
             _inGame = true;
+        }
     }
 
-    // Clouds continue moving
-    _clouds.update(deltaTime);
+    _clouds.update(deltaTime);  // Clouds keep moving
 }
+
+
 
 
 void Game::draw(sf::RenderWindow& window) {
@@ -72,7 +72,7 @@ void Game::draw(sf::RenderWindow& window) {
         _obstacles.draw(window);
         _clouds.draw(window);
 
-        // Draw the score
+        // Draw score and high score
         _scoreManager.draw(window);
 
         if (_dino.isDead()) {
@@ -85,3 +85,5 @@ void Game::draw(sf::RenderWindow& window) {
         _instructionText.draw(window);
     }
 }
+
+

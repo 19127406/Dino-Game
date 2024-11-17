@@ -4,12 +4,12 @@
 
 Dino::Dino()
 {
-    if (dinoTex.loadFromFile("../assets/spritesheets/dino.png"))
+    if (_dinoTex.loadFromFile("../assets/spritesheets/dino.png"))
     {
-        dino.setTexture(dinoTex);
-        for (int i = 0; i < frames.size(); i++)
-            frames[i] = sf::IntRect(i * 90, 0, 90, 95);
-        dino.setTextureRect(frames[0]);
+        dino.setTexture(_dinoTex);
+        for (int i = 0; i < _frames.size(); i++)
+            _frames[i] = sf::IntRect(i * 90, 0, 90, 95);
+        dino.setTextureRect(_frames[0]);
         dino.setPosition(50.f, groundOffset); // Set initial position of Dino
     }
     else
@@ -22,11 +22,11 @@ void Dino::update(sf::Time& deltaTime, float gameSpeed)
 {
     if (_isDead) return;
 
-    dinoPos = dino.getPosition();
-    dinoBounds = dino.getGlobalBounds();
-    dinoBounds.height -= 15.f;
-    dinoBounds.width -= 10.f;
-    timeTracker += deltaTime;
+    _dinoPos = dino.getPosition();
+    _dinoBounds = dino.getGlobalBounds();
+    _dinoBounds.height -= 15.f;
+    _dinoBounds.width -= 10.f;
+    _timeTracker += deltaTime;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
         _isLow = true;
@@ -37,29 +37,29 @@ void Dino::update(sf::Time& deltaTime, float gameSpeed)
         walk(gameSpeed);  // Call the regular walking animation
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && dinoPos.y >= window_height - 150.f)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _dinoPos.y >= window_height - 150.f)
     {
         animationCounter = 0;
-        dinoMotion.y = -10.f;
-        dino.setTextureRect(frames[1]);
+        _dinoMotion.y = -10.f;
+        dino.setTextureRect(_frames[1]);
 
         // play jump sound
         _sounds.jumpSound.play();
     }
 
-    if (dinoPos.y < window_height - 150.f)
+    if (_dinoPos.y < window_height - 150.f)
     {
-        dinoMotion.y += 0.15f;
-        dino.setTextureRect(frames[1]);
+        _dinoMotion.y += 0.15f;
+        dino.setTextureRect(_frames[1]);
     }
 
-    if (dinoPos.y > window_height - 150.f)
+    if (_dinoPos.y > window_height - 150.f)
     {
         dino.setPosition(sf::Vector2f(dino.getPosition().x, window_height - 150.f));
-        dinoMotion.y = 0.f;
+        _dinoMotion.y = 0.f;
     }
 
-    dino.move(dinoMotion);
+    dino.move(_dinoMotion);
 }
 
 void Dino::walk(float gameSpeed) {
@@ -68,10 +68,10 @@ void Dino::walk(float gameSpeed) {
 
     // Cycle between frames 1 and 2 based on the calculated interval
     if (animationCounter % animationInterval < animationInterval / 2) {
-        dino.setTextureRect(frames[1]);
+        dino.setTextureRect(_frames[1]);
     }
     else {
-        dino.setTextureRect(frames[2]);
+        dino.setTextureRect(_frames[2]);
     }
 
     animationCounter++;
@@ -81,10 +81,10 @@ void Dino::low()
 {
     if (animationCounter % 18 < 9) 
     {
-        dino.setTextureRect(frames[4]);
+        dino.setTextureRect(_frames[4]);
     }
     else {
-        dino.setTextureRect(frames[5]);
+        dino.setTextureRect(_frames[5]);
     }
     animationCounter++;
 }
@@ -100,6 +100,6 @@ sf::FloatRect Dino::getCollisionBounds() const {
 
 void Dino::reset() {
     animationCounter = 0;
-    dino.setTextureRect(frames[0]);
+    dino.setTextureRect(_frames[0]);
     dino.setPosition(50.f, groundOffset);
 }

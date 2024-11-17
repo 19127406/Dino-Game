@@ -93,7 +93,7 @@ public:
 	// constructor
 	Obstacles();
 
-	void update(sf::Time& deltaTime, float gameSpeed);
+	int update(sf::Time& deltaTime, float gameSpeed);
 	void draw(sf::RenderWindow& window);
 	bool checkCollision(const Dino& dino);
 	//sf::FloatRect getCollisionBounds() const;

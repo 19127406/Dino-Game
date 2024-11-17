@@ -18,49 +18,60 @@ Obstacles::Obstacles() {
 		std::cerr << "[ERROR] Cannot load bird spritesheet" << std::endl;
 }
 
-void Obstacles::update(sf::Time& deltaTime, float gameSpeed) {
-	_spawnTimer += deltaTime;
+int Obstacles::update(sf::Time& deltaTime, float gameSpeed) {
+    int avoidedCount = 0;  // Counter for avoided obstacles
 
-	// Dynamic spawn rate based on game speed
-	if (_spawnTimer.asSeconds() > (2.0f - gameSpeed * 0.1f)) {
-		switch (_randomObs()) {
-		case 1:
-			_obstacles.emplace_back(Cactus(_cactus_single));
-			break;
-		case 2:
-			_obstacles.emplace_back(Cactus(_cactus_group));
-			break;
-		case 3:
-			_obstacles.emplace_back(Cactus(_cactus_big));
-			break;
-		case 4:
-			_birds.emplace_back(Bird(_bird, sf::Vector2f(window_width, static_cast<float>(_randomPos()))));
-			break;
-		default:
-			break;
-		}
+    _spawnTimer += deltaTime;
 
-		_spawnTimer = sf::Time::Zero;
-	}
+    if (_spawnTimer.asSeconds() > (1.0f + gameSpeed / static_cast<float>(3))) {
+        // Spawn new obstacle
+        switch (_randomObs()) {
+        case 1:
+            _obstacles.emplace_back(Cactus(_cactus_single));
+            break;
+        case 2:
+            _obstacles.emplace_back(Cactus(_cactus_group));
+            break;
+        case 3:
+            _obstacles.emplace_back(Cactus(_cactus_big));
+            break;
+        case 4:
+            _birds.emplace_back(Bird(_bird, sf::Vector2f(window_width,
+                static_cast<float>(_randomPos()))));
+            break;
+        default:
+            break;
+        }
 
-	// Update positions
-	for (int i = 0; i < _obstacles.size(); i++) {
-		_obstacles[i].obstacleSprite.move(-3.0f * gameSpeed, 0.0f);
+        _spawnTimer = sf::Time::Zero;
+    }
 
-		if (_obstacles[i].obstacleSprite.getPosition().x < -150.0f) {
-			_obstacles.erase(_obstacles.begin() + i);
-		}
-	}
+    // Update cactus positions
+    for (int i = 0; i < _obstacles.size(); i++) {
+        _obstacles[i].obstacleSprite.move(-3 * gameSpeed, 0.0f);
 
-	for (int i = 0; i < _birds.size(); i++) {
-		_birds[i].fly();
-		_birds[i].obstacleSprite.move(-3.0f * gameSpeed, 0.0f);
+        if (_obstacles[i].obstacleSprite.getPosition().x < -150.0f) {
+            // Remove obstacle and count as avoided
+            _obstacles.erase(_obstacles.begin() + i);
+            avoidedCount++;
+        }
+    }
 
-		if (_birds[i].obstacleSprite.getPosition().x < -150.0f) {
-			_birds.erase(_birds.begin() + i);
-		}
-	}
+    // Update bird positions
+    for (int i = 0; i < _birds.size(); i++) {
+        _birds[i].fly();
+        _birds[i].obstacleSprite.move(-3 * gameSpeed, 0.0f);
+
+        if (_birds[i].obstacleSprite.getPosition().x < -150.0f) {
+            // Remove bird and count as avoided
+            _birds.erase(_birds.begin() + i);
+            avoidedCount++;
+        }
+    }
+
+    return avoidedCount;
 }
+
 
 void Obstacles::draw(sf::RenderWindow& window) {
 	for (const auto& obstacle : _obstacles)
